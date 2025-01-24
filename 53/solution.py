@@ -1,16 +1,30 @@
+
+'''
+利用前缀和，找到最小的前缀和  最大的前缀和， 两者之差就是要求的最大子数组
+'''
 class Solution:
     def maxSubArray(self, nums) -> int:
-        if len(nums)<1:
+        if not nums:
             return 0
-        sumResult = [0]*len(nums)
-        sumResult[0], maxNum = nums[0], nums[0]
-        for i in range(1,len(nums)):
-            sumResult[i] = max(sumResult[i-1]+nums[i], nums[i])
-            if sumResult[i] > maxNum:
-                maxNum = sumResult[i]
-        return maxNum
+
+        min_acc_sum = 0
+        acc_sum = 0
+        max_arr_sum = -10**5
+        for n in nums:
+            acc_sum += n
+            if acc_sum - min_acc_sum > max_arr_sum:
+                max_arr_sum = acc_sum - min_acc_sum
+            if acc_sum < min_acc_sum:
+                min_acc_sum = acc_sum
+        return max_arr_sum
 
 
 if __name__ == '__main__':
+    #nums = [-2,1,-3,4,-1,2,1,-5,4] # 输出6
+    #nums = [1] # 1
+    #nums = [5, 4, -1, 7, 8] # 23
+    nums = [-1] # -1
+
+
     solution = Solution()
-    print(solution.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
+    print(solution.maxSubArray(nums))
